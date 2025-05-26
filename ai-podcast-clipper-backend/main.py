@@ -50,7 +50,7 @@ auth_scheme=HTTPBearer()
 
 
 
-# processing functions 
+# processing functions, ie, functions that don't need any api calls 
 
 def create_vertical_video(tracks, scores, pyframes_path, pyavi_path, audio_path, output_path, framerate=25):
     target_width=1080
@@ -442,7 +442,7 @@ class AiPodcastClipper:
         print("Final clip moments:", len(clip_moments), clip_moments)
 
         # 3. processing clips
-        for index, moment in enumerate(clip_moments[:3]):
+        for index, moment in enumerate(clip_moments[:1]):
             if "start" in moment and "end" in moment:
                 print("processing clip" + str(index) + " from" + str(moment['start']) + "to " + str(moment['end']))
 
@@ -462,6 +462,7 @@ def main():
 
     ai_podcast_clipper=AiPodcastClipper() # we're creating an instance of the above class
     url = ai_podcast_clipper.process_video.web_url # getting url that's defined by decorator
+
 
     payload = {
         's3_key': 'test1/445min.mp4'
