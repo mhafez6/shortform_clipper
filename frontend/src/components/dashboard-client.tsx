@@ -13,7 +13,21 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Loader2, UploadCloud } from "lucide-react";
+import { Divide, Loader, Loader2, UploadCloud } from "lucide-react";
+import { generateUploadUrl } from "~/actions/s3";
+import { toast } from "sonner";
+import { processVideo } from "~/actions/generation";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
+import { Badge } from "./ui/badge";
+import { useRouter } from "next/navigation";
+import ClipDisplay from "./clip-display";
 
 const DashboardClient = ({
   uploadedFiles,
@@ -31,6 +45,14 @@ const DashboardClient = ({
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const router = useRouter();
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    router.refresh();
+    setTimeout(() => setRefreshing(false), 600);
+  };
 
   const handleDrop = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
@@ -40,9 +62,37 @@ const DashboardClient = ({
     const file = files[0]!;
     setUploading(true);
     try {
-      
-    } catch (error) {
+      const { success, signedUrl, uploadedFileId } = await generateUploadUrl({
+        filename: file.name,
+        contentType: file.type,
+      });
 
+      if (!success) throw new Error("Failed to get upload url");
+
+      const uploadResponse = await fetch(signedUrl, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file.type,
+        },
+      });
+      if (!uploadResponse.ok)
+        throw new Error(`upload failed with status: ${uploadResponse.status}`);
+
+      await processVideo(uploadedFileId);
+
+      setFiles([]);
+
+      toast.success("Video uploaded succesfully", {
+        description:
+          "Your video has been scheduled for processing, as if i have tons of people using this lmao",
+        duration: 5000,
+      });
+    } catch (error) {
+      toast.error("upload failed", {
+        description: "something went wrong, idk what, just turn it off and on ",
+        duration: 5000,
+      });
     } finally {
       setUploading(false);
     }
@@ -133,10 +183,94 @@ const DashboardClient = ({
                   )}
                 </Button>
               </div>
+
+              {uploadedFiles.length > 0 && (
+                <div className="pt-6">
+                  <div className="mb-2 flex items-center justify-between">
+                    <h3 className="text-md mb-2 font-medium">Queue status</h3>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleRefresh}
+                      disabled={refreshing}
+                    >
+                      {refreshing && (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      )}
+                      Refresh
+                    </Button>
+                  </div>
+                  <div className="max-h-[300px] overflow-auto rounded-md border">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>File</TableHead>
+                          <TableHead>Uploaded</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Clips Created</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {uploadedFiles.map((item) => (
+                          <TableRow key={item.id}>
+                            <TableCell className="max-w-xs truncate font-medium">
+                              {item.filename}
+                            </TableCell>
+                            <TableCell className="text-muted-foreground text-sm">
+                              {new Date(item.createdAt).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                              {item.status === "queued" && (
+                                <Badge variant="outline">Queued</Badge>
+                              )}
+                              {item.status === "processing" && (
+                                <Badge variant="outline">Processing</Badge>
+                              )}
+                              {item.status === "processed" && (
+                                <Badge variant="outline">Processed</Badge>
+                              )}
+                              {item.status === "no credits" && (
+                                <Badge variant="destructive">no credits</Badge>
+                              )}
+                              {item.status === "failed" && (
+                                <Badge variant="destructive">failed</Badge>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {item.clipsCount > 0 ? (
+                                <span>
+                                  {item.clipsCount} clip
+                                  {item.clipsCount !== 1 ? "s" : ""}
+                                </span>
+                              ) : (
+                                <span className="text-muted-foreground">
+                                  No clips yet
+                                </span>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
-        <TabsContent value="my-clips"></TabsContent>
+        <TabsContent value="my-clips">
+          <Card>
+            <CardHeader>
+              <CardTitle>My Clips</CardTitle>
+              <CardDescription>
+                View and manage your generated clips, it&apos;ll take some time
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ClipDisplay clips={clips}></ClipDisplay>
+            </CardContent>
+          </Card>
+        </TabsContent>
       </Tabs>
     </div>
   );
