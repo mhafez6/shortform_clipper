@@ -19,7 +19,7 @@ export const env = createEnv({
     AWS_REGION: z.string(),
     S3_BUCKET_NAME: z.string(),
 
-
+    INNGEST_EVENT_KEY: z.string(),
     PROCESS_VIDEO_ENDPOINT: z.string(),
     PROCESS_VIDEO_ENDPOINT_AUTH: z.string(),
 
@@ -52,7 +52,7 @@ export const env = createEnv({
     AWS_REGION: process.env.AWS_REGION,
     S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
 
-
+    INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY,
     PROCESS_VIDEO_ENDPOINT: process.env.PROCESS_VIDEO_ENDPOINT,
     PROCESS_VIDEO_ENDPOINT_AUTH: process.env.PROCESS_VIDEO_ENDPOINT_AUTH,
   },
