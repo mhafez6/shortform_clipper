@@ -23,6 +23,8 @@ export const env = createEnv({
     PROCESS_VIDEO_ENDPOINT: z.string(),
     PROCESS_VIDEO_ENDPOINT_AUTH: z.string(),
 
+    INNGEST_SIGNING_KEY: z.string(),
+
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -55,6 +57,8 @@ export const env = createEnv({
     INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY,
     PROCESS_VIDEO_ENDPOINT: process.env.PROCESS_VIDEO_ENDPOINT,
     PROCESS_VIDEO_ENDPOINT_AUTH: process.env.PROCESS_VIDEO_ENDPOINT_AUTH,
+
+    INNGEST_SIGNING_KEY: process.env.INNGEST_SIGNING_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
