@@ -463,14 +463,13 @@ def main():
     ai_podcast_clipper=AiPodcastClipper() # we're creating an instance of the above class
     url = ai_podcast_clipper.process_video.web_url # getting url that's defined by decorator
 
-
     payload = {
         's3_key': 'test1/445min.mp4'
     }
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer 123123"
+        "Authorization": f"Bearer {os.environ['AUTH_TOKEN']}"
     }
 
     response = requests.post(url, json=payload, headers=headers)
