@@ -62,11 +62,6 @@ export default function HomePage() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Link href="/dashboard">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                View Demo
-              </Button>
-            </Link>
           </div>
         </div>
       </main>
@@ -118,43 +113,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="mb-12 text-center text-2xl font-semibold">
-            How it works
-          </h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="text-center">
-              <div className="bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                <Upload className="text-primary h-6 w-6" />
-              </div>
-              <h3 className="mb-2 font-medium">Upload</h3>
-              <p className="text-muted-foreground text-sm">
-                Drop your video file
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                <Scissors className="text-primary h-6 w-6" />
-              </div>
-              <h3 className="mb-2 font-medium">AI Processing</h3>
-              <p className="text-muted-foreground text-sm">
-                AI finds the best moments
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                <Download className="text-primary h-6 w-6" />
-              </div>
-              <h3 className="mb-2 font-medium">Download</h3>
-              <p className="text-muted-foreground text-sm">
-                Get your viral clips
-              </p>
-            </div>
-          </div>
+      {/* Disclaimer */}
+      <footer className="container mx-auto px-4 py-8">
+        <div className="text-center">
+          <p className="text-muted-foreground text-sm italic">
+            (yes this is an AI generated landing page, I'm too lazy)
+          </p>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }
