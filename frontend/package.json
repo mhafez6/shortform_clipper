@@ -26,6 +26,7 @@
     "@aws-sdk/client-s3": "^3.817.0",
     "@aws-sdk/s3-request-presigner": "^3.817.0",
     "@hookform/resolvers": "^5.0.1",
+    "@neondatabase/serverless": "^1.0.0",
     "@prisma/client": "^6.5.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
