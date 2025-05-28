@@ -117,7 +117,7 @@ export default function HomePage() {
       <footer className="container mx-auto px-4 py-8">
         <div className="text-center">
           <p className="text-muted-foreground text-sm italic">
-            (yes this is an AI generated landing page, I'm too lazy)
+            (yes this is an AI generated landing page, I&apos;m too lazy)
           </p>
         </div>
       </footer>
