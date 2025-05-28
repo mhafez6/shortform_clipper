@@ -2,8 +2,6 @@
 
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 
 import { revalidatePath } from "next/cache";
 import { env } from "~/env";
@@ -79,7 +77,7 @@ export async function getClipPlayUrl(
     });
 
     return { success: true, url: signedUrl };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: "failed to generate url" };
   }
 }

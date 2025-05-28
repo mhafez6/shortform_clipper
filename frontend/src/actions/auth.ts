@@ -39,7 +39,7 @@ export async function signUp(data: SignupFormValues): Promise<SignupResult> {
     });
 
     return { success: true };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: "idk but something went wrong" };
   }
 }

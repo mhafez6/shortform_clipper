@@ -1,7 +1,6 @@
 "use server";
 
 import {
-  PutObjectAclCommand,
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";

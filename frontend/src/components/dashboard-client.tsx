@@ -88,7 +88,7 @@ const DashboardClient = ({
           "Your video has been scheduled for processing, as if i have tons of people using this lmao",
         duration: 5000,
       });
-    } catch (error) {
+    } catch (_error) {
       toast.error("upload failed", {
         description: "something went wrong, idk what, just turn it off and on ",
         duration: 5000,
@@ -136,7 +136,7 @@ const DashboardClient = ({
                 disabled={uploading}
                 maxFiles={1}
               >
-                {(dropzone: DropzoneState) => (
+                {(_dropzone: DropzoneState) => (
                   <>
                     <div className="flex flex-col items-center justify-center space-y-4 rounded-lg p-10 text-center">
                       <UploadCloud className="text-muted-foreground h-12 w-12" />

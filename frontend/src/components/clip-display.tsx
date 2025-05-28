@@ -1,7 +1,7 @@
 "use client";
 
 import type { Clip } from "@prisma/client";
-import { Divide, Download, Loader2, Play, Video } from "lucide-react";
+import { Download, Loader2, Play } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getClipPlayUrl } from "~/actions/generation";
 import { Button } from "./ui/button";
@@ -20,7 +20,7 @@ function ClipCard({ clip }: { clip: Clip }) {
         } else if (result.error) {
           console.error("failed to get play url" + result.error);
         }
-      } catch (error) {
+      } catch (_error) {
         console.error("failed to get play url" + `error`);
       } finally {
         setIsLoadingUrl(false);

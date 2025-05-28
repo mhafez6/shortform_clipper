@@ -1,5 +1,5 @@
 "use client";
-import { z } from "zod";
+
 import { Button } from "./ui/button";
 import {
   Card,
@@ -59,7 +59,7 @@ export function SignupForm({
       } else {
         router.push("/dashboard")
       }
-    } catch (error) {
+    } catch (_error) {
       setError("Sometging broke");
     } finally {
       setIsSubmitting(false);

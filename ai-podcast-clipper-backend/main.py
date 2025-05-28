@@ -442,7 +442,7 @@ class AiPodcastClipper:
         print("Final clip moments:", len(clip_moments), clip_moments)
 
         # 3. processing clips
-        for index, moment in enumerate(clip_moments[:1]):
+        for index, moment in enumerate(clip_moments[:5]):
             if "start" in moment and "end" in moment:
                 print("processing clip" + str(index) + " from" + str(moment['start']) + "to " + str(moment['end']))
 

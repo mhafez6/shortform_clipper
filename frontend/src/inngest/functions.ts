@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+ 
+ 
+ 
 
 import { env } from "~/env";
 import { inngest } from "./client";
@@ -132,7 +132,7 @@ export const processVideo = inngest.createFunction(
           });
         });
       }
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       await db.uploadedFile.update({
         where: {
           id: uploadedFileId,
